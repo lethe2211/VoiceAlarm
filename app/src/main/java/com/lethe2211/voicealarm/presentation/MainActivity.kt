@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         if (intent.getBooleanExtra("fromNotification", false)) {
             Log.d(this::class.java.toString(), "fromNotification")
             stopService(Intent(this, PlaySoundService::class.java))
+            stopService(Intent(this, PlaySoundService::class.java))
         }
     }
 
@@ -76,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     }
 //    private inner class ListAdapter(context: Context, resources: Int) : ArrayAdapter<AlarmItem>(context, resources) {
 //
-//        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+//        override fun getItemView(position: Int, convertView: View?, parent: ViewGroup): View {
 //            var convertView = convertView
 //            if (convertView == null) {
 //                // If there are no available views, we need to create it
@@ -88,9 +89,9 @@ class MainActivity : AppCompatActivity() {
 //    }
 //
 //    private inner class OnItemClickListener : AdapterView.OnItemClickListener {
-//        override fun onItemClick(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//        override fun onItemClick(adapterView: AdapterView<*>?, itemView: View?, position: Int, id: Long) {
 //            Log.d(this.javaClass.toString(), "Clicked")
-//            when (view?.id) {
+//            when (itemView?.id) {
 //                R.id.alarm_enabled -> Log.d(this.javaClass.toString(), "enabled/disabled")
 //                else -> Log.d(this.javaClass.toString(), "Other places clicked")
 //            }

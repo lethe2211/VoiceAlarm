@@ -5,7 +5,6 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.IBinder
 import android.media.AudioManager
-import android.R.raw
 import android.net.Uri
 import com.lethe2211.voicealarm.R
 import java.io.IOException
@@ -21,26 +20,30 @@ class PlaySoundService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        mediaPlayer = MediaPlayer()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        mediaPlayer = MediaPlayer()
+        init()
         play()
         return super.onStartCommand(intent, flags, startId)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        stop()
+        terminate()
+    }
+
+    private fun init() {
+        mediaPlayer.reset()
+        mediaPlayer.setDataSource(this, getVideoUri(R.raw.sample))
+        mediaPlayer.setVolume(volume, volume)
+        mediaPlayer.setOnCompletionListener { stopSelf() }
+        mediaPlayer.prepare()
     }
 
     private fun play() {
         try {
-            mediaPlayer.reset()
-            mediaPlayer.setDataSource(this, getVideoUri(R.raw.sample))
-            mediaPlayer.setVolume(volume, volume)
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM)
-            mediaPlayer.prepare()
             mediaPlayer.start()
         } catch (e: IOException) {
             e.printStackTrace()
@@ -48,9 +51,11 @@ class PlaySoundService : Service() {
 
     }
 
-    private fun stop() {
-        mediaPlayer.stop()
-        mediaPlayer.release()
+    private fun terminate() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop()
+            mediaPlayer.release()
+        }
     }
 
     private fun getVideoUri(@RawRes resId: Int): Uri {

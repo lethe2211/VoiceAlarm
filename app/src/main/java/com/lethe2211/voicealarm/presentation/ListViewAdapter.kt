@@ -51,6 +51,7 @@ class ListViewAdapter(private val context: Context) : BaseAdapter() { // TODO: S
                 } else {
                     Log.d(this.javaClass.toString(), "disabled")
                     Toast.makeText(context, "disabled", Toast.LENGTH_LONG).show()
+                    unregister(context)
                 }
             }
 
@@ -88,7 +89,6 @@ class ListViewAdapter(private val context: Context) : BaseAdapter() { // TODO: S
 
     private fun getPendingIntent(context: Context): PendingIntent {
         val intent = Intent(context, AlarmReceiver::class.java)
-        /// intent.setClass(context, AlarmReceiver::class.java)
         // 複数のアラームを登録する場合はPendingIntent.getBroadcastの第二引数を変更する
         // 第二引数が同じで第四引数にFLAG_CANCEL_CURRENTがセットされている場合、2回以上呼び出されたときは
         // あとからのものが上書きされる

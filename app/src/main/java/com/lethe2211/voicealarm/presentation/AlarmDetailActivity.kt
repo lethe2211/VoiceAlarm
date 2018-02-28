@@ -1,8 +1,10 @@
 package com.lethe2211.voicealarm.presentation
 
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.RecyclerView
 import android.os.Bundle
 import android.support.v4.app.NavUtils
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -20,6 +22,12 @@ class AlarmDetailActivity : AppCompatActivity() {
 
         // We cannot use actionBar in case we use AppCompatActivity
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val recyclerView = findViewById<RecyclerView>(R.id.alarm_detail_recycler_view) as RecyclerView
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = AlarmDetailRecyclerViewAdapter(arrayOf("hogefuga"))
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -53,4 +61,5 @@ class AlarmDetailActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
 }
